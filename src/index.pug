@@ -5,5 +5,10 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title websocket-game
   body
-    h2 Hello Parcel
+    .wrap
+      h2 Echo Text
+      input.send-text(type="text")
+      button.send-btn 傳送訊息
+      p.receive-text
+
     script(src="./js/index.js")
