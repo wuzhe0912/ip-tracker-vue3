@@ -14,7 +14,7 @@ sendBtn.addEventListener('click', () => {
 
 // Step4 : received message and render in HTML
 ws.onmessage = function (event) {
-  console.log(event);
+  console.log(event.data);
   // let messageValue = event;
   // console.log(messageValue);
   // const messageWrapper = document.querySelector('.message-wrapper');
