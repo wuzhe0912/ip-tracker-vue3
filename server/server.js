@@ -8,7 +8,9 @@ wss.on('connection', function connection(ws) {
     const bufferMessage = Buffer.from(message).toString();
     // Step3 : Forward to client-side
     wss.clients.forEach((client) => {
-      client.send(bufferMessage);
+      if (ws !== client && client.readyState === WebSocket.OPEN) {
+        client.send(bufferMessage);
+      }
     });
   });
 });

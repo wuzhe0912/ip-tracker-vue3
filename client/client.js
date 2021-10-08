@@ -1,32 +1,38 @@
-const ws = new WebSocket('ws://127.0.0.1:3000');
+const app = new Vue({
+  el: '#app',
+  data: {
+    list: [],
+    message: '',
+    ws: {},
+  },
 
-ws.onopen = function () {
-  console.log(`open : ${ws.readyState}`);
-};
+  mounted() {
+    this.ws = new WebSocket('ws://127.0.0.1:3000');
+    this.ws.onopen = this.onOpen;
+    this.ws.onmessage = this.onMessage;
+    this.ws.onclose = this.onClose;
+    this.ws.onerror = this.onError;
+  },
 
-// Step1 : client-side send message
-const sendBtn = document.querySelector('.send-btn');
-sendBtn.addEventListener('click', () => {
-  const inputValue = document.querySelector('.input-message').value;
-  ws.send(inputValue);
-  document.querySelector('.input-message').value = '';
+  methods: {
+    onOpen() {
+      console.log(`open : ${this.ws.readyState}`);
+    },
+    onMessage(event) {
+      console.log(1, event.data);
+      this.list.push(event.data);
+    },
+    onClose() {
+      console.log(`close : ${this.ws.readyState}`);
+    },
+    onError() {
+      console.log(`error : ${this.ws.readyState}`);
+    },
+    sendMessage() {
+      console.log(2, this.message);
+      this.list.push(this.message);
+      this.ws.send(this.message);
+      this.message = '';
+    },
+  },
 });
-
-// Step4 : received message and render in HTML
-ws.onmessage = function (event) {
-  console.log(event.data);
-  // let messageValue = event;
-  // console.log(messageValue);
-  // const messageWrapper = document.querySelector('.message-wrapper');
-  // messageWrapper.innerHTML = `
-  //   <li class="message-list">${messageValue}</li>
-  // `;
-};
-
-// // 當連結關閉時，主動觸發 close event
-// ws.onclose = function (event) {
-//   console.log(`close : ${ws.readyState}`);
-// };
-// ws.onerror = function () {
-//   console.log(`error : ${ws.readyState}`);
-// };
