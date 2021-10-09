@@ -9,13 +9,24 @@
   </head>
   <body>
     <div id="app">
-      <input type="text" class="input-message" v-model="message" />
-      <button type="button" class="send-btn" @click="sendMessage()">
-        Send Message
-      </button>
-      <ul class="message-wrapper">
-        <li v-for="(item, index) in list" :key="index + item">{{ item }}</li>
-      </ul>
+      <div v-if="isShow" class="login-wrapper">
+        <input v-model="username" class="login-input" type="text" />
+        <button @click="logingChat()">Go Chat</button>
+      </div>
+      <div v-else class="chat-wrapper">
+        <h2>Hello : {{ username }}</h2>
+        <div>
+          <input v-model="message" class="input-message" type="text" />
+          <button type="button" class="send-btn" @click="sendMessage()">
+            Send Message
+          </button>
+          <ul class="message-wrapper">
+            <li v-for="(item, index) in list" :key="index + item">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <script src="./client.js"></script>

@@ -4,6 +4,8 @@ const app = new Vue({
     list: [],
     message: '',
     ws: {},
+    username: '',
+    isShow: true,
   },
 
   mounted() {
@@ -15,24 +17,45 @@ const app = new Vue({
   },
 
   methods: {
+    logingChat() {
+      if (this.username.trim() === '') {
+        alert('請輸入姓名');
+        return;
+      }
+      this.isShow = false;
+      this.ws.send(
+        JSON.stringify({
+          event: 'login',
+          message: this.username,
+        })
+      );
+    },
+    sendMessage() {
+      this.list.push(this.message);
+      this.ws.send(
+        JSON.stringify({
+          event: 'message',
+          message: this.message,
+        })
+      );
+      this.message = '';
+    },
     onOpen() {
       console.log(`open : ${this.ws.readyState}`);
     },
     onMessage(event) {
-      console.log(1, event.data);
-      this.list.push(event.data);
+      let obj = JSON.parse(event.data);
+      if (obj.event === 'login') {
+        this.list.push(`Welcome ${obj.message} enter chat!`);
+      } else {
+        this.list.push(obj.message);
+      }
     },
     onClose() {
       console.log(`close : ${this.ws.readyState}`);
     },
     onError() {
       console.log(`error : ${this.ws.readyState}`);
-    },
-    sendMessage() {
-      console.log(2, this.message);
-      this.list.push(this.message);
-      this.ws.send(this.message);
-      this.message = '';
     },
   },
 });
