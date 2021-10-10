@@ -3,13 +3,14 @@ const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 3000 });
 
 wss.on('connection', function connection(ws) {
-  // Step2 : received client-side message
   ws.on('message', function (message) {
-    const bufferMessage = Buffer.from(message).toString();
-    // Step3 : Forward to client-side
+    const bufferMessageObj = Buffer.from(message).toString();
+    let formData = JSON.parse(bufferMessageObj);
+    formData.num = wss.clients.size;
+
     wss.clients.forEach((client) => {
-      if (ws !== client && client.readyState === WebSocket.OPEN) {
-        client.send(bufferMessage);
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify(formData));
       }
     });
   });

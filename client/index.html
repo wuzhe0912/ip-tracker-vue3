@@ -14,7 +14,8 @@
         <button @click="logingChat()">Go Chat</button>
       </div>
       <div v-else class="chat-wrapper">
-        <h2>Hello : {{ username }}</h2>
+        <h1>Hello : {{ username }}</h1>
+        <h3>Online Users : {{ onlineNum }}</h3>
         <div>
           <input v-model="message" class="input-message" type="text" />
           <button type="button" class="send-btn" @click="sendMessage()">

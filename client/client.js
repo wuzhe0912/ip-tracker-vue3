@@ -6,6 +6,7 @@ const app = new Vue({
     ws: {},
     username: '',
     isShow: true,
+    onlineNum: '',
   },
 
   mounted() {
@@ -45,10 +46,13 @@ const app = new Vue({
     },
     onMessage(event) {
       let obj = JSON.parse(event.data);
+      this.onlineNum = obj.num;
       if (obj.event === 'login') {
-        this.list.push(`Welcome ${obj.message} enter chat!`);
+        this.list.push(`Welcome : ${obj.message} enter chat!`);
       } else {
-        this.list.push(obj.message);
+        if (obj.name !== this.name) {
+          this.list.push(obj.message);
+        }
       }
     },
     onClose() {
