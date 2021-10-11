@@ -5,6 +5,7 @@ const app = new Vue({
     message: '',
     ws: {},
     username: '',
+    channelId: 'Public',
     isShow: true,
     onlineNum: '',
   },
@@ -28,6 +29,7 @@ const app = new Vue({
         JSON.stringify({
           event: 'login',
           message: this.username,
+          channelId: this.channelId,
         })
       );
     },

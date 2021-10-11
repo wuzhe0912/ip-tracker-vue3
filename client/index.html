@@ -10,7 +10,14 @@
   <body>
     <div id="app">
       <div v-if="isShow" class="login-wrapper">
-        <input v-model="username" class="login-input" type="text" />
+        <p>
+          Username :
+          <input v-model="username" type="text" />
+        </p>
+        <p>
+          Channel :
+          <input v-model="channelId" type="text" />
+        </p>
         <button @click="logingChat()">Go Chat</button>
       </div>
       <div v-else class="chat-wrapper">
