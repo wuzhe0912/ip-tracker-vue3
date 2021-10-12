@@ -1,7 +1,8 @@
 const app = new Vue({
   el: '#app',
   data: {
-    list: [],
+    messageList: [],
+    userList: [],
     message: '',
     ws: {},
     username: '',
@@ -28,16 +29,17 @@ const app = new Vue({
       this.ws.send(
         JSON.stringify({
           event: 'login',
-          message: this.username,
+          username: this.username,
           channelId: this.channelId,
         })
       );
     },
     sendMessage() {
-      this.list.push(this.message);
       this.ws.send(
         JSON.stringify({
           event: 'message',
+          username: this.username,
+          channelId: this.channelId,
           message: this.message,
         })
       );
@@ -49,12 +51,10 @@ const app = new Vue({
     onMessage(event) {
       let obj = JSON.parse(event.data);
       this.onlineNum = obj.num;
-      if (obj.event === 'login') {
-        this.list.push(`Welcome : ${obj.message} enter chat!`);
+      if (obj.event === 'message') {
+        this.messageList.push(obj);
       } else {
-        if (obj.name !== this.name) {
-          this.list.push(obj.message);
-        }
+        this.userList.push(obj);
       }
     },
     onClose() {
