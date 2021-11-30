@@ -11,15 +11,18 @@
         )
         .flex.items-center.px-4.cursor-pointer.bg-black.rounded-tr-md.rounded-br-md
           i.w-4.h-4.bg-icon-arrow.bg-center.bg-contain.bg-no-repeat
+    IPInfo
 </template>
 
 <script>
+import IPInfo from '@/components/IPInfo.vue'
+
 export default {
   name: 'Home',
-  component: {}
+  components: {
+    IPInfo
+  }
 }
 </script>
 
-<style lang="scss">
-  
-</style>
+<style lang="scss"></style>
