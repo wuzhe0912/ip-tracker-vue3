@@ -12,7 +12,7 @@
         )
         .flex.items-center.px-4.cursor-pointer.bg-black.rounded-tr-md.rounded-br-md(@click="getIpInfo")
           i.w-4.h-4.bg-icon-arrow.bg-center.bg-contain.bg-no-repeat
-    IPInfo(v-if="ipInfo")
+    IPInfo(v-if="ipInfo" :ipInfo="ipInfo")
   main#mapid.h-full.z-20
 </template>
 
@@ -36,7 +36,7 @@ export default {
     const GeolocationKey = process.env.VUE_APP_IP_GEOLOCATION_API_KEY;
 
     onMounted(() => {
-      myMap = leaflet.map('mapid').setView([51.505, -0.09], 13);
+      myMap = leaflet.map('mapid').setView([25.0392, 121.525], 13);
 
       leaflet
         .tileLayer(
@@ -57,10 +57,20 @@ export default {
     const getIpInfo = async () => {
       try {
         const res = await axios.get(
-          `https://geo.ipify.org/api/v2/country?apiKey=${GeolocationKey}&ipAddress=${queryIP.value}`
+          `https://geo.ipify.org/api/v2/country,city?apiKey=${GeolocationKey}&ipAddress=${queryIP.value}`
         );
         const result = res.data;
-        console.log(result);
+
+        ipInfo.value = {
+          address: result.ip,
+          state: result.location.region,
+          timezone: result.location.timezone,
+          isp: result.isp,
+          lat: result.location.lat,
+          lng: result.location.lng,
+        };
+        // leaflet.marker([ipInfo.value.lat, ipInfo.value.lng]).addTo(myMap);
+        myMap.setView([ipInfo.value.lat, ipInfo.value.lng], 13);
       } catch (error) {
         console.log(error.message);
       }
