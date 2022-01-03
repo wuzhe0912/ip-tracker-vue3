@@ -2,9 +2,11 @@
 
 ###### tags: `Demo`
 
-🔗 [Website View](https://ip-tracker-vue3.vercel.app/)
+🔗 <a href="https://ip-tracker-vue3.vercel.app/" target="_blank">Website Url</a>
 
-![website image](https://i.imgur.com/1mMbsTh.png)
+## website View
+
+![website View](https://cdn.jsdelivr.net/gh/wuzhe0912/image-save@master/20211228/ip-tracker-vue3.190qettga5r4.webp)
 
 ## Technologies
 
