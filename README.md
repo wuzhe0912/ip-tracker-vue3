@@ -16,8 +16,8 @@
 
 ## Future Features
 
-- [] add Map Marker
-- [] RWD Optimization
+- [ ] add Map Marker
+- [ ] RWD Optimization
 
 ## Design
 
